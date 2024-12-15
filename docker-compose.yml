@@ -1,0 +1,58 @@
+services:
+  zincsearch:
+    image: public.ecr.aws/zinclabs/zincsearch:latest
+    container_name: zincsearch
+    restart: always
+    ports:
+      - 4080:4080
+    environment:
+      - ZINC_FIRST_ADMIN_USER=admin  
+      - ZINC_FIRST_ADMIN_PASSWORD=admin
+    volumes:
+      - zinc_data:/data          
+    networks:
+      - repo_network
+
+  backend:
+    build:
+      context: ./backend         
+      dockerfile: ./Dockerfile
+      args:
+        - PORT=:$API_PORT
+        - GIN_MODE=release
+    container_name: backend
+    ports:
+      - 8080:8080
+      # - 6060:6060
+    depends_on:
+      - zincsearch
+    environment:
+      - ZINC_USER=admin 
+      - ZINC_PASSWORD=admin
+      - ZINC_URL=http://zincsearch:4080 
+      - DATA_DIR=/app/data        
+    restart: on-failure
+    volumes:
+      - ./data/enron_mail_20110402/maildir:/app/data/maildir         
+    networks:
+      - repo_network
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: ./Dockerfile
+      args:
+        - PORT=3000
+        - VITE_API_URL=$VITE_API_URL
+    ports:
+      - 80:3000
+    restart: on-failure
+    depends_on:
+      - backend
+
+volumes:
+  zinc_data:   
+networks:
+  repo_network:
+    driver: bridge
+
