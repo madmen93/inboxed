@@ -26,7 +26,8 @@ func processFile(filepath string) (EmailData, error) {
 	var body bytes.Buffer
 	_, err = io.Copy(&body, message.Body)
 	if err != nil {
-		log.Printf("Error al leer cuerpo del mensaje en archivo: %s. Error: %v\n", filepath, err)
+		// log.Printf("Error al leer cuerpo del mensaje en archivo: %s. Error: %v\n", filepath, err)
+		return EmailData{}, fmt.Errorf("error copiando contenido: %s, %v", filepath, err)
 	}
 
 	rawDate := message.Header.Get("Date")
