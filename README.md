@@ -4,6 +4,10 @@
 
 Inboxed es un sistema de búsqueda y visualización de datos que utiliza ZincSearch como motor de búsqueda, un backend desarrollado en Go, y un frontend implementado en Vue.js. Proporciona funcionalidades de filtrado y ordenamiento para explorar grandes conjuntos de datos.
 
+## Despliegue
+
+Disponible en http://ec2-18-231-252-104.sa-east-1.compute.amazonaws.com/
+
 ## Tecnologías utilizadas
 
 - **Backend**: Go
