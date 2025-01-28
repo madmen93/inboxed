@@ -33,6 +33,7 @@ type PropertyIndex struct {
 	Sortable      bool   `json:"sortable"`
 	Aggregatable  bool   `json:"aggregatable"`
 	Highlightable bool   `json:"highlightable"`
+	Format        string `json:"format"`
 }
 
 type Mapping struct {
@@ -40,8 +41,22 @@ type Mapping struct {
 }
 
 type IndexerData struct {
-	Name         string  `json:"name"`
-	StorageType  string  `json:"storage_type"`
-	ShardNum     int     `json:"shard_num"`
-	MappingField Mapping `json:"mappings"`
+	Name         string   `json:"name"`
+	StorageType  string   `json:"storage_type"`
+	ShardNum     int      `json:"shard_num"`
+	MappingField Mapping  `json:"mappings"`
+	Settings     Settings `json:"settings"`
+}
+
+type Settings struct {
+	Analysis AnalysisSettings `json:"analysis"`
+}
+
+type AnalysisSettings struct {
+	Analyzer map[string]AnalyzerFields `json:"analyzer"`
+}
+
+type AnalyzerFields struct {
+	Type      string `json:"type"`
+	Tokenizer string `json:"tokenizer"`
 }

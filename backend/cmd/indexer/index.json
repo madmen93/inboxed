@@ -46,6 +46,7 @@
         },
         "date": {
           "type": "date",
+          "format": "2006-01-02T15:04:05Z07:00",
           "index": true,
           "store": false,
           "sortable": true,
@@ -149,6 +150,18 @@
           "highlightable": true
         }
       }
-    }
+    },
+    "settings": {
+      "analysis": {
+          "analyzer": {
+              "default": {
+                  "type": "standard"
+              },
+              "my_analyzer": {
+                  "tokenizer": "standard"
+              }
+          }
+      }
+  }
   }
   
